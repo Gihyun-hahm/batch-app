@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<import resource="classpath:launch-context.xml" />
+
+	<batch:job id="JobName-FileToFile" incrementer="CustomizedIncrementer">
+		<batch:step id="step">
+			<batch:tasklet start-limit="100">
+				<batch:chunk reader="FileItemReader" processor="FileItemProcessor"
+					writer="FileItemWriter" commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+	<!-- <bean id="Reader" class="app.spring.batch.reader.*ItemReader" -->
+	<!-- scope="step"></bean> -->
+
+	<!-- <bean id="Processor" class="app.spring.batch.processor.*ItemProcessor" -->
+	<!-- scope="step"></bean> -->
+
+	<!-- <bean id="Writer" class="app.spring.batch.writer.*ItemWriter" -->
+	<!-- scope="step"></bean> -->
+
+	<bean name="CustomizedIncrementer"
+		class="app.spring.batch.core.CustomizedJobParametersIncrementer" />
+
+</beans>
